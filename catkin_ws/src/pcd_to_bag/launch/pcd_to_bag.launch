@@ -1,0 +1,8 @@
+<launch>
+    <arg name="scans_dir" default="/home/ibrahim/icra2022/ktima/labelled/filtred_scans/june/" />
+    <arg name="dest_dir" default="/home/ibrahim/icra2022/ktima/labelled/filtred_scans/" />
+    <arg name="bag_name" default="june" />
+
+    <node pkg="pcd_to_bag" name="pcd_to_bag" type="pcd_to_bag" output="screen" 
+        args="-s $(arg scans_dir) -o $(arg bag_name) -d $(arg dest_dir)" required="true"/>
+</launch>

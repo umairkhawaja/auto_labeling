@@ -1,0 +1,67 @@
+# Compiled Object files
+**/.DS_Store
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# some files
+*.pcd
+*.csv
+
+**/cmake-build-debug
+**/CMakeCache.txt
+**/cmake_install.cmake
+**/install_manifest.txt
+**/CMakeFiles/
+**/CTestTestfile.cmake
+**/Makefile
+**/*.cbp
+**/CMakeScripts
+**/compile_commands.json
+
+## Local 
+
+.idea/*.xml
+
+build/**/*
+
+catkin_ws/build/*
+catkin_ws/logs/*
+catkin_ws/devel/*
+catkin_ws/.catkin_tools/*
+.vscode/*
+
+include/*
+lib/*
+test/test_runner
+scripts/*.txt
+src/tf_listener.pyc
+scripts/log/*
+catkin_ws/src/pcd_to_bag/.idea/*
+loc_test/log/*
+log/*
