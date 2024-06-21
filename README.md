@@ -84,7 +84,7 @@ bash create_maps.bash -D $DATASET_DIR \
 If you utilize our code in your academic work, please cite the following [paper](https://arxiv.org/pdf/2301.03426):
 
 ```bibtex
-@inproceedings{hroob2024ias,
+@inproceedings{hroob2023ias,
   author = {Hroob, I and Molina, S and Polvara, R and Cielniak, G and Hanheide, M},
   title = {{LTS-NET: End-to-End Unsupervised Learning of Long-Term 3D Stable Objects}},
   journal = {Proc. of Int. Conf. on Intelligent Autonomous Systems (IAS)},
