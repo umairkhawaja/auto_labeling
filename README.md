@@ -30,13 +30,11 @@ sudo apt install ros-$ROS_DISTRO-octovis   # Useful tool to visualize octomaps
 
 ## Setup
 
-To build the labelling system, execute the following commands:
+To build the labelling system, simply use the provided build script:
 ```bash
 git clone https://github.com/ibrahimhroob/auto_labeling.git
 cd auto_labeling
-mkdir build && cd build
-cmake ..
-make && make install
+bash build.sh
 ```
 
 ## Usage
