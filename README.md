@@ -41,7 +41,45 @@ make && make install
 
 ## Usage
 
-Instructions for using the system will be added here.
+The system accepts `rosbags` of the environment located in the `bags` directory within your dataset folder:
+
+```bash
+DATASET/
+├── bags
+│   ├── 0.bag
+│   ├── 1.bag
+```
+
+To streamline the entire process, we provide a single bash script that includes all the steps for the labelling pipeline along with the necessary hyperparameters. You can find this script in the [pipeline.bash](https://github.com/ibrahimhroob/auto_labeling/blob/main/scripts/pipeline.bash) file inside the scripts folder. The most important parameters to set are [DATASET_DIR](https://github.com/ibrahimhroob/auto_labeling/blob/0241328d264e696441a6fa223c2bd7228f51ead4/scripts/pipeline.bash#L20) and [FASTLIO_CW_PTH](https://github.com/ibrahimhroob/auto_labeling/blob/0241328d264e696441a6fa223c2bd7228f51ead4/scripts/pipeline.bash#L21C1-L21C15). Please update these parameters based on your dataset and `catkin_ws` directories. Here are the main steps in sequence, which you can comment or uncomment based on your testing and requirements:
+
+```bash
+# Main code
+bash create_maps.bash -D $DATASET_DIR \
+                      -C $FASTLIO_CW_PTH \
+                      -o $OCTO_RESOLUTION \
+                      -r $ROSBAG_PLAY_RATE \
+                      -m $MAPPING_FILTER_SIZE_MAP \
+                      -s $MAPPING_FILTER_SIZE_SURF \
+                      -p $MAPPING_FILTER_POINTS \
+                      -f $LIDAR_CFG_FILE \
+                      -I $IMU_TOPIC \
+                      -P $POINTS_TOPIC
+
+# bash extract_scans.bash -D $DATASET_DIR
+
+# bash filter_ground.bash -D $DATASET_DIR \
+#                         -r $CLOTH_RESOLUTION \
+#                         -t $CLASS_THRESHOLD
+
+# bash tum_to_matrices.bash -D $DATASET_DIR
+
+# bash registration.bash -D $DATASET_DIR -l $DOWN_SAMPLE_FILTER_LEAF_SIZE=0.1
+
+# bash features.bash -D $DATASET_DIR -o $OCTO_DEPTH_QUERY -f $FEATURES_TYPE
+
+# bash label_scans.bash -D $DATASET_DIR -k $KNN_DIS_SCAN_TO_MAP
+```
+
 
 ## Publication
 
