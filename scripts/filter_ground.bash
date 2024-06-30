@@ -20,11 +20,11 @@ NC='\033[0m' # No Color
 printf "\n${PURPLE}***Script ID: filter ground***${NC}\n"
 
 ######### DIRECTORIES & FILES #################################################
-DATASET_DIR=/home/ibrahim/ktima
+DATASET_DIR=~/workspace/datasets/auto_labeler/
 
 ######### ENVIRONMENTAL VARIABLES  ############################################
-CLOTH_RESOLUTION=0.5
-CLASS_THRESHOLD=0.3
+CLOTH_RESOLUTION=0.7
+CLASS_THRESHOLD=0.2
 
 POINTS_TOPIC=/os_cloud_node/points
 
@@ -64,17 +64,29 @@ mkdir -p $ground_dir
 mkdir -p $off_ground_dir
 
 # get pcd maps list from the pcd dir
-pcd_maps=($(ls ${pcd_data_dir}))  
+pcd_maps=($(ls ${pcd_data_dir}/*.pcd))
 
-for pcd_map in ${pcd_maps[@]}; do
+for pcd_map_path in ${pcd_maps[@]}; do
+    pcd_map=$(basename "$pcd_map_path")
     printf "Processing: ${RED}${pcd_map}${NC} ...\n"
-    map_id=${pcd_map::-4}
-    map_dir=$pcd_data_dir/$pcd_map
-    CloudCompare -SILENT -O $map_dir -CSF -SCENES SLOPE -CLOTH_RESOLUTION $CLOTH_RESOLUTION -CLASS_THRESHOLD $CLASS_THRESHOLD -EXPORT_GROUND -EXPORT_OFFGROUND
-    CloudCompare -SILENT -O ${map_id}_ground_points.bin -C_EXPORT_FMT PCD -SAVE_CLOUDS FILE $ground_dir/$pcd_map
-    CloudCompare -SILENT -O ${map_id}_offground_points.bin -C_EXPORT_FMT PCD -SAVE_CLOUDS FILE $off_ground_dir/$pcd_map
-    rm ${map_id}_ground_points.bin
-    rm ${map_id}_offground_points.bin
+    map_id=${pcd_map%.pcd}
+    ground_bin=${pcd_data_dir}/${map_id}_ground_points.bin
+    offground_bin=${pcd_data_dir}/${map_id}_offground_points.bin
+
+    # Check if ground and offground bin files already exist
+    if [ -f "$ground_bin" ] && [ -f "$offground_bin" ]; then
+        printf "Skipping ${RED}${pcd_map}${NC} as it has already been processed.\n"
+    else
+        flatpak run org.cloudcompare.CloudCompare -SILENT -O $pcd_map_path -CSF -SCENES SLOPE -CLOTH_RESOLUTION $CLOTH_RESOLUTION -CLASS_THRESHOLD $CLASS_THRESHOLD -EXPORT_GROUND -EXPORT_OFFGROUND
+    fi
+
+    ground_pcd=$ground_dir/$pcd_map
+    off_ground_pcd=$off_ground_dir/$pcd_map
+
+    flatpak run org.cloudcompare.CloudCompare -SILENT -O ${ground_bin} -C_EXPORT_FMT PCD -SAVE_CLOUDS FILE $ground_pcd
+    flatpak run org.cloudcompare.CloudCompare -SILENT -O ${offground_bin} -C_EXPORT_FMT PCD -SAVE_CLOUDS FILE $off_ground_pcd
+    rm ${ground_bin}
+    rm ${offground_bin}
     printf "======================================================\n"
 done
 
