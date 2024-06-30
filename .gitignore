@@ -65,5 +65,4 @@ scripts/log/*
 catkin_ws/src/pcd_to_bag/.idea/*
 loc_test/log/*
 log/*
-bin/auto_labeling
-bin/auto_labeling
+bin/
