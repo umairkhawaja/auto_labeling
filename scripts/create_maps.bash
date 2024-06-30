@@ -21,8 +21,8 @@ printf "\n${PURPLE}***Script ID: create maps***${NC}\n"
 
 ######### DIRECTORIES & FILES #################################################
 # main dataset dir, initially will have only the bags folder
-DATASET_DIR=/home/ibrahim/ktima
-CW_PTH=/home/ibrahim/Neptune/catkin_ws
+DATASET_DIR=/workspace/datasets/BLT/
+CW_PTH=catkin_ws
 
 ######### ENVIRONMENTAL VARIABLES  ############################################
 OCTO_RESOLUTION=0.1 

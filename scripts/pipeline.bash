@@ -17,8 +17,8 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 ######### DIRECTORIES & FILES #################################################
-DATASET_DIR=/home/ibrahim/ktima
-FASTLIO_CW_PTH=/home/ibrahim/neptune/catkin_ws
+DATASET_DIR=/workspace/datasets/auto_labeler
+FASTLIO_CW_PTH=/workspace/repos/auto_labeling/catkin_ws
 
 ######### ENVIRONMENTAL VARIABLES  ############################################
 #mapping params
@@ -53,29 +53,30 @@ printf "log dir: ${BLUE}${LOG_DIR}${NC}\n"
 
 ###############################################################################
 #Main code is here
-bash create_maps.bash  -D $DATASET_DIR \
-                              -C $FASTLIO_CW_PTH \
-                              -o $OCTO_RESOLUTION \
-                              -r $ROSBAG_PLAY_RATE \
-                              -m $MAPPING_FILTER_SIZE_MAP \
-                              -s $MAPPING_FILTER_SIZE_SURF \
-                              -p $MAPPING_FILTER_POINTS \
-                              -f $LIDAR_CFG_FILE \
-                              -I $IMU_TOPIC \
-                              -P $POINTS_TOPIC
+# bash create_maps.bash  -D $DATASET_DIR \
+#                               -C $FASTLIO_CW_PTH \
+#                               -o $OCTO_RESOLUTION \
+#                               -r $ROSBAG_PLAY_RATE \
+#                               -m $MAPPING_FILTER_SIZE_MAP \
+#                               -s $MAPPING_FILTER_SIZE_SURF \
+#                               -p $MAPPING_FILTER_POINTS \
+#                               -f $LIDAR_CFG_FILE \
+#                               -I $IMU_TOPIC \
+#                               -P $POINTS_TOPIC
 
 # bash extract_scans.bash -D $DATASET_DIR
 
+## Needs to be executed on the host device with CloudCompare
 # bash filter_ground.bash -D $DATASET_DIR  \
 #                         -r $CLOTH_RESOLUTION \
 #                         -t $CLASS_THRESHOLD
 
-# bash tum_to_matrices.bash -D $DATASET_DIR
+bash tum_to_matrices.bash -D $DATASET_DIR
 
-# bash registration.bash    -D $DATASET_DIR -l $DOWN_SAMPLE_FILTER_LEAF_SIZE=0.1
+bash registration.bash    -D $DATASET_DIR -l $DOWN_SAMPLE_FILTER_LEAF_SIZE=0.1
 
-# bash features.bash        -D $DATASET_DIR -o $OCTO_DEPTH_QUERY -f $FEATURES_TYPE
+bash features.bash        -D $DATASET_DIR -o $OCTO_DEPTH_QUERY -f $FEATURES_TYPE
 
-# bash label_scans.bash     -D $DATASET_DIR -k $KNN_DIS_SCAN_TO_MAP
+bash label_scans.bash     -D $DATASET_DIR -k $KNN_DIS_SCAN_TO_MAP
 
 printf "\n${GREEN}Pipeline Finished!${NC} \n"

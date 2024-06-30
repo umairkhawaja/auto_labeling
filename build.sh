@@ -13,10 +13,10 @@ cmake ..
 make && make install
 
 # Remove the build directory as it is not required 
-rm -r build
+cd .. && rm -r build
 
 # Navigate to the catkin workspace
-cd ../catkin_ws
+cd catkin_ws
 
 # Clean the catkin workspace
 catkin clean -y

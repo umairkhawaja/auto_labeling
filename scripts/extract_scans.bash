@@ -48,7 +48,7 @@ printf "\n"
 
 ###############################################################################
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-CW_DIR="$(dirname "$SCRIPT_DIR")"../catkin_ws
+CW_DIR="$(dirname "$SCRIPT_DIR")"/../catkin_ws
 source $CW_DIR/devel/setup.bash
 
 echo "catkin ws dir: $CW_DIR"
